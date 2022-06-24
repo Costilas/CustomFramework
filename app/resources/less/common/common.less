@@ -1,0 +1,80 @@
+html, body {
+  margin: 0 auto;
+  padding: 0;
+
+  .wrapper {
+    min-height: 100vh;
+    height: 100%;
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .news_block {
+      background-color: snow;
+      width: 60%;
+      padding: 20px 10px;
+        h1 {
+          margin-bottom: 5px;
+        }
+        & > p {
+          display: block;
+          margin: 10px 0;
+          font-weight: bold;
+        }
+        .articles_block{
+          border-top: 1px dotted darkred;
+          border-bottom: 1px dotted darkred;
+          padding: 20px 0;
+
+          .article {
+            margin-bottom: 20px;
+
+            .article_date{
+              display: inline-block;
+              color: snow;
+              background: purple;
+              padding: 3px;
+              font-size: 14px;
+            }
+          }
+        }
+        .pagintion_block {
+          ul {
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(max-content, 40px));
+            align-content: center;
+            align-items: center;
+            gap: 5px;
+            a {background: gainsboro;}
+            .active {
+              background: purple!important;
+              color: snow!important;
+            }
+            a {
+              font-size: 14px;
+              text-decoration: none;
+              color: black;
+
+              li {
+                align-self: center;
+                list-style: none;
+                display: block;
+
+                text-align: center;
+                border: 1px solid grey;
+              }
+            }
+
+
+          }
+
+        }
+    }
+  }
+}
+
+*, *:after, *:before {
+  box-sizing: border-box;
+}

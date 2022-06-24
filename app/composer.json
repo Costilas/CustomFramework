@@ -1,0 +1,7 @@
+{
+    "require": {
+        "icanboogie/inflector": "^2.2",
+      "ext-yaml": "*",
+      "ext-pdo": "*"
+    }
+}

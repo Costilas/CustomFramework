@@ -1,0 +1,41 @@
+version: "3.7"
+
+volumes:
+  mysql-data: {}
+
+services:
+  nginx:
+    build:
+      context: ./
+      dockerfile: nginx/Dockerfile
+    volumes:
+      - ./app:/var/www/html/app
+    ports:
+      - "8090:80"
+
+  php-fpm:
+    build:
+      context: ./
+      dockerfile: php-fpm/Dockerfile
+    environment:
+      PHP_IDE_CONFIG: serverName=Test
+    volumes:
+      - ./app:/var/www/html/app
+
+  mysql:
+    image: mysql
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=sergey
+      - MYSQL_PASSWORD=12345
+      - MYSQL_DATABASE=news
+
+  adminer:
+    image: adminer
+    ports:
+      - "8095:8080"
+    
