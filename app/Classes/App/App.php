@@ -3,10 +3,10 @@
 namespace Classes\App;
 
 use Classes\Controllers\Controller;
-use Classes\ORM\Orm;
 use Classes\Router\Router;
-use Classes\Services\Request;
-use Classes\View\Presenter;
+use Classes\Utility\Facades\View\View;
+use Classes\Utility\HttpRequest\Request;
+use Classes\Utility\ORM\Orm;
 
 class App
 {
@@ -23,7 +23,7 @@ class App
             if(!$action) {throw new \Exception();}
         }catch (\Exception) {
             // log \Exception
-            Presenter::render('404/404');
+            View::render('404/404');
             die();
         }
 

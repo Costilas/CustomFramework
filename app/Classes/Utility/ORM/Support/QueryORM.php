@@ -1,6 +1,6 @@
 <?php
 
-namespace Classes\ORM\Support;
+namespace Classes\Utility\ORM\Support;
 
 use Classes\Models\Model;
 

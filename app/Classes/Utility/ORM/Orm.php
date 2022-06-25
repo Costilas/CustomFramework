@@ -1,11 +1,11 @@
 <?php
 
-namespace Classes\ORM;
+namespace Classes\Utility\ORM;
 
-use Classes\DB\Db;
+use Classes\Utility\Database\Db;
 use Classes\Models\Model;
-use Classes\ORM\Support\CleanerORM;
-use Classes\ORM\Support\QueryORM;
+use Classes\Utility\ORM\Support\CleanerORM;
+use Classes\Utility\ORM\Support\QueryORM;
 
 class Orm
 {

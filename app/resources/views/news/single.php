@@ -1,4 +1,4 @@
-<?php \Classes\View\Presenter::render('interface/header', compact('title'));?>
+<?php \Classes\Utility\Facades\View\View::render('interface/header', compact('title'));?>
 <div class="wrapper">
     <div class="news_block">
         <div class="title_block">
@@ -12,4 +12,4 @@
         <a href="/">Все новости >></a>
     </div>
 </div>
-<?php \Classes\View\Presenter::render('interface/footer'); ?>
+<?php \Classes\Utility\Facades\View\View::render('interface/footer'); ?>

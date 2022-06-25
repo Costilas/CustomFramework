@@ -1,6 +1,6 @@
 <?php
 
-namespace Classes\Facades;
+namespace Classes\Utility\Facades\Route;
 
 use Classes\Router\Router;
 

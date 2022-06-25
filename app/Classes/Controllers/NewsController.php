@@ -3,12 +3,12 @@
 namespace Classes\Controllers;
 
 use Classes\Models\News;
-use Classes\Services\Request;
-use Classes\View\Presenter;
+use Classes\Utility\HttpRequest\Request;
+use Classes\Utility\Facades\View\View;
 
 class NewsController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request):void{
         /*
          * По хорошему здесь необходим бидлер как в Laravel и внутри ОРМ билдер sql
             запросов, но я решил, для скорости работы просто расширить метод paginate
@@ -17,13 +17,13 @@ class NewsController extends Controller
         $news = News::paginate(5, $request->get('page'), ['idate' => 'DESC']);
         $title = 'News';
 
-        Presenter::render('news/list', compact('news', 'title'));
+        View::render('news/list', compact('news', 'title'));
     }
 
-    public function single(Request $request, $id){
+    public function single(Request $request, $id):void{
         $article = News::find($id);
         $title = "Single article $article->id";
 
-        Presenter::render('news/single', compact('article', 'title'));
+        View::render('news/single', compact('article', 'title'));
     }
 }

@@ -1,12 +1,11 @@
 <?php
 
-namespace Classes\ORM\Support;
+namespace Classes\Utility\ORM\Support;
 
 use ICanBoogie\Inflector;
 
 class CleanerORM
 {
-
     static function initTableName(string $className): string
     {
         return self::prepareTableName($className);

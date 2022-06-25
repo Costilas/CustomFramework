@@ -1,9 +1,9 @@
 <?php
 
 use Classes\App\App;
-use Classes\Services\Request;
+use Classes\Utility\HttpRequest\Request;
 use Classes\Router\Router;
-use Classes\ORM\Orm;
+use Classes\Utility\ORM\Orm;
 
 error_reporting(E_ALL);
 

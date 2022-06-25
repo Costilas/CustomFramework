@@ -2,7 +2,7 @@
 
 namespace Classes\Models;
 
-use Classes\ORM\Orm;
+use Classes\Utility\ORM\Orm;
 use Classes\Services\Paginator;
 
 abstract class Model

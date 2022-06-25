@@ -12,9 +12,13 @@ namespace Classes\Controllers;
 В табличном виде выводится последний нанятый сотрудник у каждого начальника. */
 
 
-class StaffController
+use Classes\Models\User;
+use Classes\Utility\Facades\View\View;
+use Classes\Utility\HttpRequest\Request;
+
+class StaffController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
 
     }
 
@@ -25,4 +29,10 @@ class StaffController
     public function hired() {
 
     }
+
+    public function single(Request $request) {
+        View::render('user/user');
+    }
+
+
 }
