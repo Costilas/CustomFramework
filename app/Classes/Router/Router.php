@@ -4,47 +4,54 @@ namespace Classes\Router;
 
 class Router
 {
-    const ROUTES = [
-        '/article/{id}' => [\Classes\Controllers\NewsController::class, 'single'],
-        '/' => [\Classes\Controllers\NewsController::class, 'index'],
-    ];
-
+    const ROUTES_STORAGE_PATH = './routes/routes.php';
     const PATTERNS = [
       '{id}' => '(\d+)',
     ];
+    private static array $encodedRoutes = [];
+    private array $decodedRoutes = [];
 
-    private array $decodedPaths = [];
+    public function __construct()
+    {
+        $this->getRoutes();
+        $this->decodeRoutes();
+    }
 
     public function defineRouteAction(string $route):array|bool {
-        $this->decodePath();
         return $this->chooseRouteAction($route);
     }
 
-    /*в целом получилось запутанно и можно было бы отойтись if esle с регулярками,
-        но хотелось автоматизма
-    */
-    private function decodePath() {
-       $encodedRoutes  = self::ROUTES;
-       $decodedRoutes = array_keys($encodedRoutes);
-       $actions = array_values($encodedRoutes);
-       $patters = self::PATTERNS;
+    private function decodeRoutes() {
+       $patterns = self::PATTERNS;
+       $decodedRoutes = array_keys(self::$encodedRoutes);
+       $actions = array_values(self::$encodedRoutes);
 
-       foreach ($patters as $pattern => $key) {
+       foreach ($patterns as $pattern => $key) {
            $decodedRoutes = array_map(function ($path) use($pattern, $key) {
-               $path = preg_replace("/\\//", '\\/', $path);
-               return preg_replace("/$pattern/", $key, $path);
+               $path = str_replace('/',"\\/", $path);
+               return str_replace("$pattern", $key, $path);
            }, $decodedRoutes);
        }
-       $this->decodedPaths = array_combine($decodedRoutes, $actions);
+
+       $this->decodedRoutes = array_combine($decodedRoutes, $actions);
     }
 
     private function chooseRouteAction(string $route):array|bool {
-        foreach ($this->decodedPaths as $path => $action)
+        foreach ($this->decodedRoutes as $routePattern => $action)
         {
-            if(preg_match("/^$path$/", $route, $match)) {
+            if(preg_match("/^$routePattern$/", $route, $match)) {
                 return ['action' => $action, 'routeParameter' => $match[1] ?? null];
             }
         }
         return false;
+    }
+
+    private function getRoutes()
+    {
+        require_once self::ROUTES_STORAGE_PATH;
+    }
+
+    public static function setRoute(string $path, array $instructions) {
+        self::$encodedRoutes[$path] = $instructions;
     }
 }
