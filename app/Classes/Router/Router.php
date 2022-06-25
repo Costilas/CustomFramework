@@ -9,6 +9,8 @@ class Router
       '{id}' => '(\d+)',
     ];
     private static array $encodedRoutes = [];
+    private static array $orderedRouteActions = [];
+
     private array $decodedRoutes = [];
 
     public function __construct()
@@ -22,18 +24,17 @@ class Router
     }
 
     private function decodeRoutes() {
-       $patterns = self::PATTERNS;
-       $decodedRoutes = array_keys(self::$encodedRoutes);
-       $actions = array_values(self::$encodedRoutes);
+       $encodedRoutes = array_keys(self::$encodedRoutes);
+       $decodedRoutes = [];
 
-       foreach ($patterns as $pattern => $key) {
+       foreach (self::PATTERNS as $pattern => $key) {
            $decodedRoutes = array_map(function ($path) use($pattern, $key) {
                $path = str_replace('/',"\\/", $path);
                return str_replace("$pattern", $key, $path);
-           }, $decodedRoutes);
+           }, $encodedRoutes);
        }
 
-       $this->decodedRoutes = array_combine($decodedRoutes, $actions);
+       $this->decodedRoutes = array_combine($decodedRoutes, self::$orderedRouteActions);
     }
 
     private function chooseRouteAction(string $route):array|bool {
@@ -53,5 +54,9 @@ class Router
 
     public static function setRoute(string $path, array $instructions) {
         self::$encodedRoutes[$path] = $instructions;
+    }
+
+    public static function setActions(array $instructions) {
+        self::$orderedRouteActions[] = $instructions;
     }
 }
