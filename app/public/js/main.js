@@ -8,9 +8,10 @@ $('start_search').addEventListener('click', function (event){
    let userId = $('user_id').value;
    if(userId) {
        try {
-           fetch('/getUserJson?user_id=' + userId)
-               .then(user => {return user.json()})
+           const user = fetch('/getUserJson?user_id=' + userId)
+               .then(user => user.resolve(value))
                .then(user => {
+                   console.log(user)
                    let properties = Object.keys(user);
                    for(let i = 0; i < properties.length; i++){
                        let infoLine = document.createElement('div');
