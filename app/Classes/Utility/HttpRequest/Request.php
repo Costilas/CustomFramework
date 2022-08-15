@@ -17,13 +17,8 @@ class Request
         return $this->currentLocation;
     }
 
-    public function getCurrentRequest():array {
-        return $this->currentRequest;
-    }
-
     public function get(string $parameter) {
-        $currentRequest = $this->getCurrentRequest();
-        return $currentRequest[$parameter] ?? null;
+        return $this->currentRequest[$parameter] ?? null;
     }
 
     private function setCurrentLocation() {

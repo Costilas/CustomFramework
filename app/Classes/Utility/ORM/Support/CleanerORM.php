@@ -6,12 +6,12 @@ use ICanBoogie\Inflector;
 
 class CleanerORM
 {
-    static function initTableName(string $className): string
+    static function initTableName(string $className, string|null $modelAssignedTable = null):string
     {
-        return self::prepareTableName($className);
+        return $modelAssignedTable ?? self::prepareTableName($className);
     }
 
-    static function prepareTableName(string $className): string
+    static private function prepareTableName(string $className): string
     {
         $inflector = Inflector::get('en');
         $result = self::cleanClassName(strtolower($className));
@@ -19,7 +19,7 @@ class CleanerORM
         return $inflector->pluralize($result);
     }
 
-    static function cleanClassName(string $className): string
+    static private function cleanClassName(string $className): string
     {
         $array = explode('\\', $className);
 

@@ -8,8 +8,8 @@ $('start_search').addEventListener('click', function (event){
    let userId = $('user_id').value;
    if(userId) {
        try {
-           const user = fetch('/getUserJson?user_id=' + userId)
-               .then(user => user.resolve(value))
+           fetch('/getUserJson?user_id=' + userId)
+               .then(user => user.json())
                .then(user => {
                    console.log(user)
                    let properties = Object.keys(user);

@@ -11,14 +11,14 @@ class Orm
 {
     private Db $db;
 
-    public function __construct()
+    public function __construct(private string|null $modelAssignedTable)
     {
         $this->db = new Db();
     }
 
     public function find(int $id, string $className): Model|null
     {
-        $table = CleanerORM::initTableName($className);
+        $table = CleanerORM::initTableName($className, $this->modelAssignedTable);
         $sql = QueryORM::formFindQuery($table);
 
         $statement = $this->db->pdo->prepare($sql);
@@ -34,7 +34,7 @@ class Orm
 
     public function findAll(string $className): array
     {
-        $table = CleanerORM::initTableName($className);
+        $table = CleanerORM::initTableName($className, $this->modelAssignedTable);
         $sql = QueryORM::formFindAllQuery($table);
         $result = [];
 
@@ -63,7 +63,7 @@ class Orm
 
     public function remove(int $id, string $className): bool
     {
-        $table = CleanerORM::initTableName($className);
+        $table = CleanerORM::initTableName($className, $this->modelAssignedTable);
         $sql = QueryORM::formRemoveQuery($table, $id);
 
         return $this->db->pdo->exec($sql);
@@ -71,7 +71,7 @@ class Orm
 
     public function create(Model $model, string $className): bool
     {
-        $table = CleanerORM::initTableName($className);
+        $table = CleanerORM::initTableName($className, $this->modelAssignedTable);
         $sql = QueryORM::formCreateQuery($model, $table);
 
         $this->db->pdo->prepare($sql)->execute();
@@ -85,21 +85,18 @@ class Orm
 
     public function update(Model $model, string $className): bool
     {
-        $table = CleanerORM::initTableName($className);
+        $table = CleanerORM::initTableName($className, $this->modelAssignedTable);
         $query = QueryORM::formUpdateQuery($model, $table);
 
         $statement = $this->db->pdo->prepare($query['sql']);
         $statement->execute($query['data']);
         $status = $statement->errorInfo();
-        if ($status[0] === "00000") {
-            return true;
-        }
-        return false;
+        return ($status[0] === "00000");
     }
 
     public function paginate(string $className, int $perPage, int|null $currentPage, array $orderBy):array {
         $currentPage = $currentPage ?? 1;
-        $table = CleanerORM::initTableName($className);
+        $table = CleanerORM::initTableName($className, $this->modelAssignedTable);
         $query = QueryORM::formPaginateQuery($table, $perPage, $currentPage, $orderBy);
 
         $statement = $this->db->pdo->prepare($query);
@@ -118,7 +115,7 @@ class Orm
     }
 
     public function count(string $className) {
-        $table = CleanerORM::initTableName($className);
+        $table = CleanerORM::initTableName($className, $this->modelAssignedTable);
         $query = QueryORM::formCountQuery($table);
 
         $statement = $this->db->pdo->prepare($query);

@@ -7,6 +7,7 @@ use Classes\Services\Paginator;
 
 abstract class Model
 {
+    static protected string|null $table = null;
     static protected Orm $orm;
 
     public function __construct(array $data = null)
@@ -18,12 +19,12 @@ abstract class Model
         return $this;
     }
 
-    static public function find(int $id): Model
+    static public function find(int $id):Model
     {
         return static::getStaticORM()->find($id, get_called_class());
     }
 
-    static public function findAll(): array
+    static public function findAll():array
     {
         return static::getStaticORM()->findAll(get_called_class());
     }
@@ -33,12 +34,12 @@ abstract class Model
         return static::getStaticORM()->save($this, get_called_class());
     }
 
-    static public function remove(int $id): bool
+    static public function remove(int $id):bool
     {
         return static::getStaticORM()->remove($id, get_called_class());
     }
 
-    static public function paginate(int $perPage, int|null $currentPage, array $orderBy){
+    static public function paginate(int $perPage, int|null $currentPage, array $orderBy):Paginator{
         $currentPage = $currentPage ?? 1;
         $className = get_called_class();
 
@@ -48,14 +49,14 @@ abstract class Model
 
     }
 
-    private function fillEmptyObject(array $data): void
+    private function fillEmptyObject(array $data):void
     {
         foreach ($data as $attribute => $value) {
             $this->$attribute = $value;
         }
     }
 
-    private static function getStaticORM(): object
+    private static function getStaticORM():Orm
     {
         static::setStaticORM();
         return static::$orm;
@@ -63,6 +64,10 @@ abstract class Model
 
     private static function setStaticORM():void
     {
-        static::$orm = new Orm();
+        static::$orm = new Orm(static::$table);
+    }
+
+    public function toJSON():string {
+        return json_encode($this);
     }
 }

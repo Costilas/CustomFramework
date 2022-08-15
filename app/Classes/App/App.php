@@ -2,11 +2,11 @@
 
 namespace Classes\App;
 
+use Classes\Container\Container;
 use Classes\Controllers\Controller;
 use Classes\Router\Router;
 use Classes\Utility\Facades\View\View;
 use Classes\Utility\HttpRequest\Request;
-use Classes\Utility\ORM\Orm;
 
 class App
 {
@@ -14,8 +14,12 @@ class App
     private string $controllerMethod;
     private int|null $routeParameter = null;
 
-    public function __construct(protected Orm $orm, protected Request $request, protected Router $router)
-    {}
+    static Container $container;
+
+    public function __construct(protected Request $request, protected Router $router)
+    {
+        static::$container = new Container();
+    }
 
     public function init() {
         try {
@@ -41,6 +45,7 @@ class App
 
     private function defineController(string $controllerClassName) {
         return new $controllerClassName();
+        //return static::$container->get($controllerClassName);
     }
 
     private function setControllerMethod(string $controllerMethodName) {
