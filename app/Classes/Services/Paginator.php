@@ -25,11 +25,11 @@ class Paginator
         $this->setCurrentPage($currentPage);
     }
 
-    public function items():array {
+    public function items(): array {
         return $this->items;
     }
 
-    public function links():string
+    public function links(): string
     {
         $links = null;
         $limits = $this->limits();
@@ -58,7 +58,7 @@ class Paginator
         return $html;
     }
 
-    private function generateHtml($page, $text = null):string
+    private function generateHtml($page, $text = null): string
     {
         $text = $text ?? $page;
         $currentURI = strtok($_SERVER['REQUEST_URI'], '?');
@@ -66,22 +66,28 @@ class Paginator
         return '<a href="' . $currentURI . '?' . $this->index . '=' . $page . '"><li>' . $text . '</li></a>';
     }
 
-    private function limits():array
+    private function limits(): array
     {
         $left = $this->current_page - round($this->max / 2);
-        $start = $left > 0 ? $left : 1;
+        $start = $left > 0
+            ? $left
+            : 1;
 
         if ($start + $this->max <= $this->amount)
-            $end = $start > 1 ? $start + $this->max : $this->max;
+            $end = $start > 1
+                ? $start + $this->max
+                : $this->max;
         else {
             $end = $this->amount;
-            $start = $this->amount - $this->max > 0 ? $this->amount - $this->max : 1;
+            $start = ($this->amount - $this->max) > 0
+                ? $this->amount - $this->max
+                : 1;
         }
 
         return ['start' => $start, 'end' => $end];
     }
 
-    private function setCurrentPage($currentPage):void
+    private function setCurrentPage($currentPage): void
     {
         $parameterToSet = $currentPage > 0
             ? $currentPage
@@ -95,7 +101,7 @@ class Paginator
     }
 
 
-    private function amount():int
+    private function amount(): int
     {
         return round($this->total / $this->limit);
     }

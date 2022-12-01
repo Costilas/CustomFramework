@@ -1,3 +1,3 @@
-    <script src="/public/js/main.js"></script>
     </body>
+    <script src="/public/js/bundle.js"></script>
 </html>

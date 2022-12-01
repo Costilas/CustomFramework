@@ -19,55 +19,89 @@ abstract class Model
         return $this;
     }
 
-    static public function find(int $id):Model
+    /**
+     *
+     */
+    static public function find(int $id): Model
     {
         return static::getStaticORM()->find($id, get_called_class());
     }
 
-    static public function findAll():array
+    /**
+     *
+     */
+    static public function findAll(): array
     {
         return static::getStaticORM()->findAll(get_called_class());
     }
 
+    /**
+     *
+     */
     public function save()
     {
         return static::getStaticORM()->save($this, get_called_class());
     }
 
-    static public function remove(int $id):bool
+    /**
+     *
+     */
+    static public function remove(int $id): bool
     {
         return static::getStaticORM()->remove($id, get_called_class());
     }
 
-    static public function paginate(int $perPage, int|null $currentPage, array $orderBy):Paginator{
+    /**
+     *
+     */
+    static public function paginate(int $perPage, int|null $currentPage, array $orderBy): Paginator
+    {
         $currentPage = $currentPage ?? 1;
         $className = get_called_class();
 
         $count = static::getStaticORM()->count($className);
         $models =  static::getStaticORM()->paginate($className, $perPage, $currentPage, $orderBy);
-        return new Paginator($models, $count, $perPage, $currentPage);
 
+        return new Paginator($models, $count, $perPage, $currentPage);
     }
 
-    private function fillEmptyObject(array $data):void
+    //Shared methods
+
+    /**
+     *
+     */
+    public function toJSON(): string
+    {
+        return json_encode($this);
+    }
+
+    //Private methods
+
+    /**
+     *
+    */
+    private function fillEmptyObject(array $data): void
     {
         foreach ($data as $attribute => $value) {
             $this->$attribute = $value;
         }
     }
 
-    private static function getStaticORM():Orm
+    /**
+     *
+    */
+    private static function getStaticORM(): Orm
     {
         static::setStaticORM();
+
         return static::$orm;
     }
 
-    private static function setStaticORM():void
+    /**
+     *
+     */
+    private static function setStaticORM(): void
     {
         static::$orm = new Orm(static::$table);
-    }
-
-    public function toJSON():string {
-        return json_encode($this);
     }
 }
