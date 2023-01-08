@@ -1,0 +1,36 @@
+
+ * 1. Перевести данные на env (db и тд)
+ * 2. Реализовать DI контейнер
+ * 3. Реализовать коллекцию
+ * 4. Привести в порядок paginate()
+ * 5. Сделать билдер запросов
+ * 6. Реализовать raw запросы
+ * 7. Релизовать связи в моделях
+ * 8. Раскидать PHPDocs аннотации
+ * 9. Redis
+ * 10. Db manager - фабрику по драйверам
+ * 11. Реализовать миграции
+ * 12. Релизовать сидинг
+ * 13. Реализовать консольные команды как в артизан
+ * 
+
+
+xhprof
+
+# Установка
+RUN apk add git
+RUN git clone https://github.com/longxinH/xhprof.git /var/www/html/xhprof &&\
+    cd /var/www/html/xhprof/extension && \
+    phpize && \
+    ./configure --with-php-config=/usr/local/bin/php-config && \
+    make && \
+    make install
+RUN apk add graphviz
+
+#RUN ln -sf /var/www/html/xhprof/xhprof_html /var/www/html/app/xhprof
+
+xhprof ini
+
+[xhprof]
+extension=xhprof.so
+xhprof.output_dir=/var/www/html/xhprof
