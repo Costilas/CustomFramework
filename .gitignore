@@ -2,3 +2,4 @@
 /.idea
 /app/vendor
 /app/node_modules
+/app/.phpunit.result.cache
