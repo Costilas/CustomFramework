@@ -1,5 +1,8 @@
-/app/.idea
-/.idea
-/app/vendor
-/app/node_modules
-/app/.phpunit.result.cache
+.idea
+vendor
+node_modules
+.phpunit.result.cache
+
+# Ingnore specific MacOS files
+.DS_Store
+._*
