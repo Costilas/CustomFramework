@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php">
+<phpunit
+    bootstrap="vendor/autoload.php"
+    colors="true"
+>
     <testsuites>
-        <testsuite name="Router">
+        <testsuite name="Feature">
             <directory suffix="Test.php">
-                Classes/Tests/Router
+                tests/Feature
             </directory>
         </testsuite>
-        <testsuite name="User">
+        <testsuite name="Unit">
             <directory suffix="Test.php">
-                Classes/Tests/User
+                tests/Unit
             </directory>
         </testsuite>
     </testsuites>

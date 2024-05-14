@@ -8,7 +8,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Classes\\" : "Classes/"
+            "Classes\\" : "Classes/",
+            "tests\\" : "tests/"
         }
     },
     "require-dev": {
