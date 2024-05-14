@@ -1,7 +1,0 @@
-database:
-  driver: 'mysql'
-  host: 'mysql'
-  port: '3306'
-  db: 'news'
-  username: 'sergey'
-  password: '12345'

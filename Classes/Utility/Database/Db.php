@@ -23,7 +23,16 @@ class Db
 
     private function getCredentials()
     {
-        return yaml_parse_file('connection.yaml');
+        return [
+            'database' => [
+                'username' => $_ENV['DB_USER'],
+                'password' => $_ENV['DB_PASSWORD'],
+                'host' => $_ENV['DB_HOST'],
+                'port' => $_ENV['DB_PORT'],
+                'driver' => $_ENV['DB_DRIVER'],
+                'db' => $_ENV['DB_NAME']
+            ]
+        ];
     }
 
     private function formAuth(array $credentials): string
